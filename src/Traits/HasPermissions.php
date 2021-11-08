@@ -8,6 +8,13 @@ use Agoussec\URP\Models\Role;
 trait HasPermissions
 {
 
+
+    /**
+     * Give permission to any permissions
+     *
+     * @param  array  $permissions
+     * @return $this
+     */
     public function givePermissionsTo(...$permissions)
     {
         $permissions = $this->getAllPermissions($permissions);
@@ -18,6 +25,13 @@ trait HasPermissions
         return $this;
     }
 
+
+    /**
+     * Withdraw user permission
+     *
+     * @param  array  $permissions
+     * @return  $this
+     */
     public function withdrawPermissionsTo(...$permissions)
     {
         $permissions = $this->getAllPermissions($permissions);
@@ -25,17 +39,38 @@ trait HasPermissions
         return $this;
     }
 
+
+    /**
+     * Refresh permission of user
+     *
+     * @param  array  $permissions
+     * @return  $this
+     */
     public function refreshPermissions(...$permissions)
     {
         $this->permissions()->detach();
         return $this->givePermissionsTo($permissions);
     }
 
+
+    /**
+     * Check whether user has specific permission
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $permission
+     * @return  boolean
+     */
     public function hasPermissionTo($permission)
     {
         return $this->hasPermissionThroughRole($permission) || $this->hasPermission($permission);
     }
 
+
+    /**
+     * Check permission through user role
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $permission
+     * @return  \Illuminate\Database\Eloquent\Model|static
+     */
     public function hasPermissionThroughRole($permission)
     {
         foreach ($permission->roles as $role) {
@@ -46,20 +81,25 @@ trait HasPermissions
         return false;
     }
 
+
+    /**
+     * Check whether user has role
+     *
+     * @param  array  $roles
+     * @return  bool
+     */
     public function hasRole(...$roles)
     {
-        if(is_array($roles)){
-            foreach ($roles as $r1){
-                if(is_array($r1)){
-                    foreach ($r1 as $r2) {
-                        if ($this->roles->contains('slug', $r2)) {
-                            return true;
-                        }
-                    }
-                } else {
-                    if ($this->roles->contains('slug', $r1)) {
+        foreach ($roles as $r1) {
+            if (is_array($r1)) {
+                foreach ($r1 as $r2) {
+                    if ($this->roles->contains('slug', $r2)) {
                         return true;
                     }
+                }
+            } else {
+                if ($this->roles->contains('slug', $r1)) {
+                    return true;
                 }
             }
         }
@@ -67,19 +107,48 @@ trait HasPermissions
         return false;
     }
 
+
+    /**
+     * Create a new command instance.
+     *
+     * @return  \Illuminate\Database\Eloquent\Model|static
+     */
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'users_roles');
     }
+
+
+     /**
+     * Create a new command instance.
+     *
+     * @param  string  $roleslug
+     * @return  \Illuminate\Database\Eloquent\Model|static
+     */
     public function permissions()
     {
         return $this->belongsToMany(Permission::class, 'users_permissions');
     }
+
+
+    /**
+     * Check whether user has permission
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $permission
+     * @return  \Illuminate\Database\Eloquent\Model|static
+     */
     protected function hasPermission($permission)
     {
         return (bool) $this->permissions->where('slug', $permission->slug)->count();
     }
 
+
+    /**
+     * Get all permission given to user
+     *
+     * @param  array  $permissions
+     * @return  \Illuminate\Database\Eloquent\Model|static
+     */
     protected function getAllPermissions(array $permissions)
     {
         return Permission::whereIn('slug', $permissions)->get();
