@@ -60,6 +60,11 @@ class AddPermission extends Command
         $this->table($headers, [[$permission->name, $permission->slug]]);
     }
 
+     /**
+     * Save new role in database
+     *
+     * @return void
+     */
     protected function checkSlug(){
         if($this->slug){
             $this->info('Validating...');
@@ -71,6 +76,11 @@ class AddPermission extends Command
         }
     }
 
+     /**
+     * Save new Permission in database
+     *
+     * @return \Illuminate\Database\Eloquent\Model|static
+     */
     protected function save(){
         return Permission::create([
             'name' => $this->permissionname,
@@ -78,6 +88,11 @@ class AddPermission extends Command
         ]);
     }
 
+     /**
+     * Create slug from permissionname
+     *
+     * @return string
+     */
     protected function createSlug(){
         $string = $this->permissionname; $separator = '-';
         $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
@@ -90,6 +105,11 @@ class AddPermission extends Command
         return $string;
     }
 
+     /**
+     * Save new role in database
+     *
+     * @return boolean
+     */
     protected function validate(){
         if( Permission::where('slug', $this->slug)->count()){
             $this->error('Given Slug already taken!');

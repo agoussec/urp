@@ -22,8 +22,18 @@ class AssignRole extends Command
      */
     protected $description = 'Assign role to specific user. Param: 1- Role slug, 2- User email';
 
+    /**
+     * Role slug
+     *
+     * @var string
+     */
     protected $role;
 
+    /**
+     * User email
+     *
+     * @var mixed|string
+     */
     protected $user;
     /**
      * Create a new command instance.
@@ -72,14 +82,31 @@ class AssignRole extends Command
 
     }
 
+     /**
+     * Attach given role to user
+     *
+     * @return boolean
+     */
     protected function attachRole(){
         return $this->user->roles()->attach($this->role);
     }
 
+     /**
+     * Create a new command instance.
+     *
+     * @param  string  $roleslug
+     * @return  \Illuminate\Database\Eloquent\Model|static
+     */
     protected function getRole($roleslug){
         return Role::where('slug',  $roleslug)->first();
     }
 
+     /**
+     * Get user where given email
+     *
+     * @param  string  $userslug
+     * @return \Illuminate\Database\Eloquent\Model|static
+     */
     protected function getUser($userslug){
         return config("auth.providers.users.model")::where('email', $userslug)->first();
     }

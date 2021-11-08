@@ -21,8 +21,18 @@ class AddRole extends Command
      */
     protected $description = 'Add new user role in project.';
 
+    /**
+     * Rolename
+     *
+     * @var string
+     */
     protected $rolename;
 
+    /**
+     * Slug name
+     *
+     * @var string
+     */
     protected $slug;
 
     /**
@@ -60,6 +70,11 @@ class AddRole extends Command
         $this->table($headers, [[$role->name, $role->slug]]);
     }
 
+    /**
+     * Validate incomming slug or create new slug according to rolename
+     *
+     * @return void
+     */
     protected function checkSlug(){
         if($this->slug){
             $this->info('Validating...');
@@ -71,6 +86,11 @@ class AddRole extends Command
         }
     }
 
+    /**
+     * Save new role in database
+     *
+     * @return \Illuminate\Database\Eloquent\Model|static
+     */
     protected function save(){
         return Role::create([
             'name' => $this->rolename,
@@ -78,6 +98,11 @@ class AddRole extends Command
         ]);
     }
 
+    /**
+     * Create slug from rolename
+     *
+     * @return string
+     */
     protected function createSlug(){
         $string = $this->rolename; $separator = '-';
         $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
@@ -90,6 +115,11 @@ class AddRole extends Command
         return $string;
     }
 
+    /**
+     * Create a new command instance.
+     *
+     * @return boolean
+     */
     protected function validate(){
         if( Role::where('slug', $this->slug)->count()){
             $this->error('Given Slug already taken!');
