@@ -9,6 +9,10 @@
             "email": "agoussec@gmail.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/agoussec/urp/issues",
+        "source": "https://github.com/agoussec/urp"
+    },
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
@@ -21,6 +25,11 @@
             "Traits",
             "src"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Agoussec\\URP\\": "src/"
+        }
     },
     "extra": {
         "laravel": {
