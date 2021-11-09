@@ -1,5 +1,4 @@
 # URP 
----------------------------------------
 
 ## A laravel package for kickstarting user role and permission project
 
@@ -8,7 +7,6 @@
 
 
 ## Features
----------------------------------------
 
 - Publishable role and permission migrations 
 - Create user `roles` and `permissions` using artisan command line
@@ -20,7 +18,6 @@
 
 ## 
 ## Installation
----------------------------------------
 
 URP requires [Laravel](https://laravel.com/) 5.3+ to run.
 
@@ -32,7 +29,6 @@ composer require agoussec/urp
 
 
 ## Usage
----------------------------------------
 ##### Console commands -
 
 Creating User role
@@ -109,19 +105,18 @@ Migration file will atoumatically load after installation of package. just need 
     @endcanany
 
 ## TODOs
----------------------------------------------------------------
 * Console commands for removing `roles`, `permissions`
 * Commands for giving `permission` to specific user or user `role`
 * Policies logic around a particular model or resource.
 
 ## Credits
----------------------------------------------------------------
+
 
 * [laravelcode](https://www.laravelcode.com/post/laravel-7-user-roles-and-permissions-tutorial-without-packages)
 
 
 ## License
----------------------------------------------------------------
+
 
 MIT
 
