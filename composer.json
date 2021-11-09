@@ -18,13 +18,7 @@
         "psr-4": {
             "App\\": "app/",
             "Agoussec\\URP\\": "src/"
-        },
-        "classmap": [
-            "database/migrations",
-            "Models",
-            "Traits",
-            "src"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
