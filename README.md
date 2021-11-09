@@ -108,6 +108,7 @@ Migration file will atoumatically load after installation of package. just need 
 * Console commands for removing `roles`, `permissions`
 * Commands for giving `permission` to specific user or user `role`
 * Policies logic around a particular model or resource.
+* Test cases
 
 ## Credits
 
