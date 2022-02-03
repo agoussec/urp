@@ -28,6 +28,23 @@ composer require agoussec/urp
 ```
 
 
+Add HasPermission trait in User Model.
+
+```sh
+<?php
+namespace  App\Models;
+...
+...
+use Agoussec\URP\Traits\HasPermissions;
+
+class User extends Authenticatable
+{
+    use HasPermissions;
+    ...
+    ...   
+}
+```
+
 ## Usage
 ##### Console commands -
 
